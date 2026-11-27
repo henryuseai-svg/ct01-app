@@ -3,6 +3,20 @@
 Toàn bộ việc điền mẫu, xuất DOCX/PDF và lưu phiếu đều diễn ra trong trình duyệt của từng thiết bị.
 Dữ liệu công dân được lưu trong trình duyệt (IndexedDB) và không gửi đi đâu.
 
+## Dùng trên điện thoại / máy tính bảng
+
+Mở **https://henryuseai-svg.github.io/ct01-app/** rồi chọn "Thêm vào màn hình chính"
+(Chrome: menu ⋮ → Thêm vào màn hình chính / Cài đặt ứng dụng; Safari: nút Chia sẻ → Thêm vào MH chính).
+Sau lần mở đầu tiên app chạy được cả khi không có mạng. Phiếu lưu riêng trên từng thiết bị.
+
+Cập nhật bản trên mạng sau khi sửa code (tăng `CACHE` trong `sw.js` trước):
+```
+git add -A
+git commit -m "mô tả thay đổi"
+git push
+```
+GitHub Pages tự cập nhật sau khoảng 1 phút.
+
 ## Mở app bằng biểu tượng
 
 Bấm đúp vào lối tắt **Tờ khai CT01** trong thư mục `CT01 App`. Lối tắt này chạy `tools/mo_app.pyw`:
