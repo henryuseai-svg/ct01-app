@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d4ed8">
+<title>Điền mẫu CT01</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>Tờ khai CT01</h1>
+  <nav class="tabs">
+    <button data-tab="form" class="active">Phiếu</button>
+    <button data-tab="list">Danh sách</button>
+    <button data-tab="people">Danh bạ</button>
+    <button data-tab="settings">Cài đặt</button>
+  </nav>
+</header>
+
+<main>
+  <!-- PHIẾU -->
+  <section id="tab-form" class="tab active">
+    <div class="form-head">
+      <span id="form-status">Phiếu mới</span>
+      <span class="head-btns">
+        <button class="btn primary" data-scan="auto">📷 Quét cả hộ</button>
+        <button class="btn ghost" id="btn-new">+ Phiếu mới</button>
+      </span>
+    </div>
+
+    <div class="card">
+      <label>Kính gửi (cơ quan đăng ký cư trú)<input data-k="coQuan"></label>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Người kê khai</h2><button class="btn scan" data-scan="td">📷 Quét / Tìm</button></div>
+      <label>1. Họ, chữ đệm và tên<input data-k="td.ten"></label>
+      <div class="row">
+        <label>2. Ngày sinh<input data-k="td.ns" class="date" placeholder="dd/mm/yyyy" inputmode="numeric"></label>
+        <label>3. Giới tính<select data-k="td.gt"><option></option><option>Nam</option><option>Nữ</option></select></label>
+      </div>
+      <label>4. Số định danh cá nhân<input data-k="td.cc" class="cc" maxlength="12" inputmode="numeric"></label>
+      <div class="row">
+        <label>5. Số điện thoại<input data-k="td.sdt" inputmode="tel"></label>
+        <label>6. Email<input data-k="td.email" type="email"></label>
+      </div>
+      <label>8. Mối quan hệ với chủ hộ<input data-k="td.qh" list="dl-qh"></label>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Chủ hộ</h2><button class="btn scan" data-scan="ch">📷 Quét / Tìm</button></div>
+      <button class="btn ghost small" id="btn-self-ch">Người kê khai là chủ hộ</button>
+      <label>7. Họ, chữ đệm và tên chủ hộ<input data-k="ch.ten"></label>
+      <label>9. Số định danh cá nhân của chủ hộ<input data-k="ch.cc" class="cc" maxlength="12" inputmode="numeric"></label>
+    </div>
+
+    <div class="card">
+      <label>10. Nội dung đề nghị<textarea data-k="nd" rows="3"></textarea></label>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>11. Thành viên cùng thay đổi</h2><span id="tv-count" class="muted"></span></div>
+      <div id="tv-list"></div>
+      <button class="btn ghost" id="btn-add-tv">+ Thêm thành viên</button>
+    </div>
+
+    <div class="card">
+      <label>Ngày nộp (để trống thì in dòng chấm để viết tay)<input data-k="ngayNop" type="date"></label>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="btn-save">💾 Lưu</button>
+      <button class="btn" id="btn-docx">⬇ DOCX</button>
+      <button class="btn" id="btn-preview">👁 Xem / In PDF</button>
+    </div>
+  </section>
+
+  <!-- DANH SÁCH -->
+  <section id="tab-list" class="tab">
+    <input id="list-search" class="search" placeholder="Tìm theo tên, số định danh, nội dung…">
+    <div id="list-items"></div>
+  </section>
+
+  <!-- DANH BẠ -->
+  <section id="tab-people" class="tab">
+    <input id="people-search" class="search" placeholder="Tìm theo tên hoặc số định danh…">
+    <div id="people-items"></div>
+  </section>
+
+  <!-- CÀI ĐẶT -->
+  <section id="tab-settings" class="tab">
+    <div class="card">
+      <h2>Mặc định</h2>
+      <label>Kính gửi (điền sẵn cho phiếu mới)<input id="set-coquan"></label>
+      <button class="btn primary" id="btn-save-settings">Lưu cài đặt</button>
+    </div>
+    <div class="card">
+      <h2>Sao lưu dữ liệu</h2>
+      <p class="muted">Dữ liệu chỉ nằm trong trình duyệt của thiết bị này. Hãy sao lưu thường xuyên; xoá dữ liệu trình duyệt sẽ mất phiếu.</p>
+      <button class="btn" id="btn-export">⬇ Xuất file sao lưu</button>
+      <label class="btn">⬆ Nhập file sao lưu<input type="file" id="file-import" accept=".json,application/json" hidden></label>
+      <p id="storage-info" class="muted"></p>
+    </div>
+  </section>
+</main>
+
+<datalist id="dl-qh">
+  <option>Chủ hộ</option><option>Vợ</option><option>Chồng</option><option>Con đẻ</option><option>Con nuôi</option>
+  <option>Cha đẻ</option><option>Mẹ đẻ</option><option>Anh ruột</option><option>Chị ruột</option><option>Em ruột</option>
+  <option>Cháu ruột</option><option>Ông nội</option><option>Bà nội</option><option>Ông ngoại</option><option>Bà ngoại</option>
+  <option>Con dâu</option><option>Con rể</option><option>Ở nhờ</option><option>Ở thuê</option>
+</datalist>
+
+<!-- Hộp quét QR / tìm danh bạ -->
+<dialog id="scan-dlg">
+  <div class="dlg-head"><h2 id="scan-title">Quét QR căn cước</h2><button class="btn ghost" id="scan-close">✕</button></div>
+  <div id="cam-wrap" hidden>
+    <video id="cam-video" playsinline muted></video>
+    <div class="cam-guide"></div>
+    <span id="cam-info"></span>
+  </div>
+  <div class="cam-ctl">
+    <button class="btn" id="scan-cam">📷 Bật camera</button>
+    <label class="btn" title="Chọn ảnh chụp mã QR, hoặc nhấn Ctrl+V để dán ảnh">🖼 Quét từ ảnh<input type="file" id="scan-img" accept="image/*" hidden></label>
+    <select id="cam-select" hidden></select>
+    <label id="cam-zoom-wrap" hidden>Phóng to<input type="range" id="cam-zoom"></label>
+  </div>
+  <p class="muted" id="cam-tip" hidden>Đặt mã QR trên thẻ vào khung, cách camera khoảng 10–15 cm, đủ sáng, không loá.</p>
+  <p class="muted">Có thể chọn ảnh, kéo-thả ảnh vào đây hoặc dán ảnh (Ctrl+V) chứa mã QR; ảnh chụp nhiều thẻ cùng lúc cũng được khi "Quét cả hộ".</p>
+  <div id="auto-box" hidden>
+    <p class="muted">Đưa lần lượt từng thẻ: người kê khai → chủ hộ → các thành viên. Mỗi thẻ tự điền vào ô trống tiếp theo.</p>
+    <label class="chk"><input type="checkbox" id="auto-self-ch"> Người kê khai cũng là chủ hộ</label>
+    <ol id="auto-done"></ol>
+    <button class="btn primary" id="auto-finish">✓ Xong</button>
+  </div>
+  <label>Máy quét USB hoặc dán chuỗi QR (Enter để nhận)<input id="scan-text" autocomplete="off"></label>
+  <label>Hoặc tìm trong danh bạ<input id="scan-search" placeholder="Tên hoặc số định danh" autocomplete="off"></label>
+  <div id="scan-results"></div>
+</dialog>
+
+<!-- Xem trước / in -->
+<dialog id="preview-dlg">
+  <div class="dlg-head"><h2>Xem trước</h2>
+    <div><button class="btn primary" id="btn-print">🖨 In / Lưu PDF</button> <button class="btn ghost" id="preview-close">✕</button></div>
+  </div>
+  <div id="preview-scroll"><div id="preview-area"></div></div>
+</dialog>
+
+<div id="print-area"></div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.47.4/build/docxtemplater.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.2/dist/docx-preview.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/barcode-detector@2.3.1/dist/iife/pure.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

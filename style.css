@@ -1,0 +1,101 @@
+:root {
+  --bg: #f3f4f6; --card: #fff; --text: #111827; --muted: #6b7280; --line: #d1d5db;
+  --primary: #1d4ed8; --primary-text: #fff; --danger: #b91c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111827; --card: #1f2937; --text: #f3f4f6; --muted: #9ca3af; --line: #374151; --primary: #3b82f6; }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+.topbar { position: sticky; top: 0; z-index: 5; background: var(--primary); color: var(--primary-text); padding: 8px 16px 0; padding-top: max(8px, env(safe-area-inset-top)); }
+.topbar h1 { margin: 0 0 6px; font-size: 18px; }
+.tabs { display: flex; gap: 4px; overflow-x: auto; }
+.tabs button { flex: 1; background: none; border: 0; color: inherit; opacity: .75; padding: 10px 8px; font-size: 15px; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
+.tabs button.active { opacity: 1; border-bottom-color: #fff; font-weight: 600; }
+main { max-width: 760px; margin: 0 auto; padding: 12px 16px 96px; }
+.tab { display: none; } .tab.active { display: block; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+.card h2 { font-size: 16px; margin: 0 0 8px; }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }
+.card-head h2 { margin: 0; }
+label { display: block; font-size: 14px; color: var(--muted); margin: 8px 0; }
+input, select, textarea { display: block; width: 100%; margin-top: 4px; padding: 10px; font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary); border-color: transparent; }
+input.invalid { border-color: var(--danger); outline-color: var(--danger); }
+.missing { border-color: var(--danger) !important; background: color-mix(in srgb, var(--danger) 12%, var(--bg)) !important; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+@media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 10px 14px; font: inherit; font-size: 15px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); cursor: pointer; }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: var(--primary-text); }
+.btn.ghost { background: transparent; }
+.btn.danger { color: var(--danger); }
+.btn.small { padding: 6px 10px; font-size: 14px; }
+.btn.scan { padding: 6px 10px; font-size: 14px; }
+.muted { color: var(--muted); font-size: 14px; }
+.form-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+#form-status { font-weight: 600; }
+.form-head { gap: 8px; flex-wrap: wrap; }
+.head-btns { display: flex; gap: 8px; }
+label.chk { display: flex; align-items: center; gap: 8px; color: var(--text); }
+label.chk input { width: auto; margin: 0; }
+#auto-done { margin: 8px 0; padding-left: 24px; }
+#auto-done li { padding: 4px 0; }
+#auto-done li.new { animation: flash-ok 1.8s ease-out; border-radius: 4px; }
+#auto-finish { width: 100%; }
+.actions { position: fixed; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; justify-content: center; padding: 10px 16px; padding-bottom: max(10px, env(safe-area-inset-bottom)); background: var(--card); border-top: 1px solid var(--line); z-index: 4; }
+.actions .btn { flex: 1; max-width: 220px; }
+.tv { border: 1px dashed var(--line); border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; }
+.tv .card-head h2 { font-size: 15px; }
+.search { margin-bottom: 12px; }
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+.item b { display: block; }
+.item .meta { color: var(--muted); font-size: 13px; margin: 2px 0 8px; }
+.item .btns { display: flex; gap: 6px; flex-wrap: wrap; }
+dialog { width: min(760px, calc(100vw - 16px)); max-height: calc(100vh - 16px); border: 0; border-radius: 12px; padding: 12px; background: var(--card); color: var(--text); }
+dialog::backdrop { background: rgba(0,0,0,.5); }
+#scan-dlg.dragging { outline: 4px dashed #22c55e; outline-offset: -4px; }
+#scan-dlg.dragging::after { content: "Thả ảnh vào đây để quét"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(21,128,61,.85); color: #fff; font-size: 20px; font-weight: 600; border-radius: 12px; pointer-events: none; }
+.dlg-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.dlg-head h2 { margin: 0; font-size: 17px; }
+#cam-wrap { position: relative; margin: 8px 0; background: #000; border-radius: 8px; overflow: hidden; }
+#cam-video { display: block; width: 100%; max-height: 55vh; object-fit: contain; }
+.cam-guide { position: absolute; top: 50%; left: 50%; height: 60%; aspect-ratio: 1; transform: translate(-50%, -50%); border: 3px solid rgba(255,255,255,.9); border-radius: 8px; box-shadow: 0 0 0 9999px rgba(0,0,0,.35); pointer-events: none; }
+#cam-wrap.ok .cam-guide { border-color: #22c55e; }
+#cam-info { position: absolute; left: 8px; bottom: 6px; color: #fff; font-size: 12px; text-shadow: 0 0 3px #000; }
+.cam-ctl { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.cam-ctl select { width: auto; flex: 1; min-width: 160px; margin: 0; }
+.cam-ctl label { flex: 1; min-width: 160px; margin: 0; }
+
+/* Dấu hiệu đã nhận thông tin */
+@keyframes flash-ok { 0%, 60% { background: #bbf7d0; border-color: #16a34a; color: #14532d; } 100% { } }
+input.flash, select.flash { animation: flash-ok 1.8s ease-out; }
+@keyframes card-ok { 0%, 60% { box-shadow: 0 0 0 3px #16a34a; } 100% { box-shadow: none; } }
+.card.flash, .tv.flash { animation: card-ok 1.8s ease-out; }
+#toast.ok { background: #15803d; font-weight: 600; }
+#scan-results .item { cursor: pointer; }
+#preview-scroll { overflow: auto; max-height: calc(100vh - 90px); background: #9ca3af; margin-top: 8px; border-radius: 8px; }
+#toast { position: fixed; left: 50%; bottom: 80px; transform: translateX(-50%); background: #111827; color: #fff; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 20; max-width: 90vw; }
+#toast.show { opacity: 1; }
+
+/* Trang Word do docx-preview vẽ: dùng Times New Roman, máy không có thì dùng Tinos (cùng kích thước chữ) */
+section.docx, section.docx * { font-family: "Times New Roman", Tinos, serif !important; }
+section.docx { background: #fff; color: #000; line-height: 1.15; } /* Word "single" với Times New Roman ≈ 1,15 (docx-preview mặc định 1,4) */
+section.docx sup { line-height: 0; }
+section.docx td { padding: 0 5.4pt; } /* lề ô mặc định của Word: trái/phải 0,19 cm, trên/dưới 0 */
+section.docx tr[style*="text-align"] { text-align: start !important; } /* căn giữa dòng (trPr jc) là căn vị trí bảng, không phải căn chữ */
+/* Bảng căn giữa rộng hơn vùng chữ: Word cho tràn đều hai bên, trình duyệt thì dồn sang phải */
+section.docx table[style*="margin-left: auto"] { position: relative; left: 50%; transform: translateX(-50%); }
+#preview-area { padding: 8px; }
+#preview-area section.docx { margin: 0 auto 10px; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+#print-area { display: none; }
+
+@media print {
+  @page { size: A4; margin: 0; }
+  body { background: #fff; }
+  body > *:not(#print-area) { display: none !important; }
+  #print-area { display: block; }
+  /* Mỗi trang Word = đúng 1 trang A4; phần tràn (chỉ là đoạn trống chừa chỗ ký) bị cắt thay vì đẩy sang trang mới */
+  #print-area section.docx { margin: 0; box-shadow: none; height: 297mm; min-height: 0 !important; overflow: hidden; break-after: page; }
+  #print-area section.docx:last-child { break-after: auto; }
+}
